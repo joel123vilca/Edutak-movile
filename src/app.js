@@ -1,9 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- * https://ionicframework.com/docs/ionicons/
- */
+
 
 import React, { Component } from 'react';
 import {
@@ -12,32 +7,18 @@ import {
   Text,
   View,
 } from 'react-native';
-import ArtistList from './ArtistList';
-import {getArtists} from './api-client';
 
-export default class App extends Component<Props> {
-    state = {
-      artists: []
-    }
-    componentDidMount(){
-      getArtists()
-      .then(data=> this.setState({ artists: data }))
-    }
+import {Scene, Router} from 'react-native-router-flux';
+import HomeView from './homeView';
+import ArtistDetailView from './ArtistDetailView'
 
-  render() {
-    const artists = this.state.artists
-
-    return (
-      <View style={styles.container}>
-      <ArtistList artists={artists}/>
-      </View>
-    );
+export default class App extends Component {
+  render(){
+    return <Router>
+      <Scene key="root">
+        <Scene key="home" component={HomeView} hideNavBar />
+        <Scene key="artistDetail" component={ArtistDetailView}/>
+      </Scene>
+    </Router>
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 50,
-    backgroundColor: 'lightgray',
-  }
-});
