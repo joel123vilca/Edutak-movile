@@ -13,16 +13,20 @@ import {
   View,
 } from 'react-native';
 import ArtistList from './ArtistList';
+import {getArtists} from './api-client';
 
 export default class App extends Component<Props> {
-  render() {
-    const artist={
-      image:'https://www.ecdalliance.org/wp-content/uploads/2018/03/Edutak.png',
-      name:'joel vilca',
-      likes:200,
-      comment:20,
+    state = {
+      artists: []
     }
-    const artists = Array(10).fill(artist);
+    componentDidMount(){
+      getArtists()
+      .then(data=> this.setState({ artists: data }))
+    }
+
+  render() {
+    const artists = this.state.artists
+
     return (
       <View style={styles.container}>
       <ArtistList artists={artists}/>
